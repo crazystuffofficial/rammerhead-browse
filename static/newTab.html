@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Tab</title>
+<script src="/proxy.js"></script>
+<style>
+/* Basic styling for the new tab page */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  height: 100%;
+  background: #f5f5f5;
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 10px 0;
+  z-index: 1000;
+}
+
+.new-tab {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding-top: 100px;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+#search-input {
+  padding: 10px 15px;
+  font-size: 18px;
+  border: 1px solid #ddd;
+  border-radius: 24px 0 0 24px;
+  width: 33%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#search-input:focus {
+  border-color: #007bff;
+}
+
+#search-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0 24px 24px 0;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.2s;
+}
+
+#search-button:hover {
+  background-color: #0056b3;
+}
+
+#search-results {
+  position: absolute;
+  top: 50px;
+  width: 50%;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.result-item {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  background-color: #fff;
+  transition: background-color 0.2s;
+}
+form {
+  width: 100%;
+}
+.result-item:hover {
+  background-color: #f9f9f9;
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.title {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 300;
+}
+</style>
+</head>
+<body>
+  <div class="new-tab">
+    <div class="title">Rammerhead Search Engine</div>
+    <div class="search-container">
+      <form>
+      <input type="text" id="search-input" placeholder="Search...">
+      <input id="search-button" type="submit" value = "Search">
+      </form>
+      <div id="search-results"></div>
+    </div>
+  </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('search-input');
+  const searchForm = document.querySelector('form');
+  const searchResultsContainer = document.getElementById('search-results');
+
+  // Function to perform search
+  function performSearch() {
+    const searchTerm = searchInput.value.trim();
+    const url = '/searchResults';
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ query: searchTerm })
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Failed to fetch search results');
+          }
+          var json = response.json();
+          console.log(json);
+          return json;
+      })
+      .then(searchResults => {
+          displaySearchResults(searchResults);
+      })
+      .catch(error => {
+          console.error(error);
+      });
+}
+
+  // Function to display search results
+  function displaySearchResults(results) {
+    searchResultsContainer.innerHTML = ''; // Clear previous results
+    if (results.length > 0) {
+      searchResultsContainer.style.display = 'flex';
+    } else {
+      searchResultsContainer.style.display = 'none';
+    }
+    results.forEach(result => {
+      const resultItem = document.createElement('div');
+      resultItem.classList.add('result-item');
+      resultItem.textContent = result;
+      resultItem.addEventListener('click', function() {
+        openSearchResult(result);
+      });
+      searchResultsContainer.appendChild(resultItem);
+    });
+  }
+
+  // Function to simulate opening a search result (example function)
+  async function parseUrl(string){
+    if(string.includes(".")){
+      if(string.startsWith("http://") || string.startsWith("https://")){
+        var urlToFetch = await window.proxyEncode(string);
+        try{
+          var response = await fetch(urlToFetch);
+          if(response.ok){
+            return string;
+          } else{
+            return "https://www.google.com/search?q=" + string;
+          }
+        } catch(e){
+          return "https://www.google.com/search?q=" + string;
+        }
+      } else{
+        var urlToFetch = await window.proxyEncode("https://" + string);
+        try{
+          var response = await fetch(urlToFetch);
+          if(response.ok){
+            return "https://" + string;
+          } else{
+            return "https://www.google.com/search?q=" + string;
+          }
+        } catch(e){
+          return "https://www.google.com/search?q=" + string;
+        }
+      }
+    } else{
+      return "https://www.google.com/search?q=" + string;
+    }
+  }
+  async function openSearchResult(result) {
+    var url = await parseUrl(result);
+    location.href = await window.proxyEncode(url);
+  }
+
+  // Event listener for keyup events in the search input
+  searchForm.addEventListener("submit", function(event){
+    event.preventDefault();
+    openSearchResult(searchInput.value);
+  })
+  searchInput.addEventListener('keyup', function() {
+    // Delay the search by 300ms after user stops typing
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(performSearch, 0);
+  });
+  let typingTimer; // Timer identifier for delaying search
+
+  performSearch();
+
+});
+</script>
+</body>
+</html>

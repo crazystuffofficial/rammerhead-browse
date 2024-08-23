@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Browser</title>
+<link rel="stylesheet" href="styles.css">
+<script src="/proxy.js"></script>
+</head>
+<body>
+  <div class="browser">
+    <div class="tabs">
+      <!-- Default tab -->
+      <div class="tab-header">
+        <button class="tab-button active" data-tab-id="tab-0"><img class="favicon" id="favicon-0" src="defaultFavicon.png"> Tab 1</button>
+      </div>
+      <!-- Plus button -->
+      <button id="add-tab">+</button>
+    </div>
+    <form>
+    <div class="search-bar">
+      <span class="control history-back">&lt;</span>
+      <span class="control history-forward">&gt;</span>
+      <span class="control reload">&circlearrowright;</span>
+      <span class="control close-tab">&times;</span>
+      <input type="text" id="url-input" placeholder="Enter URL...">
+    </div>
+  </form>
+    <div class="tab-content">
+      <!-- Default iframe -->
+      <iframe id="tab-0" class="tab active" src="newTab.html" frameborder="0" allow="fullscreen"></iframe>
+    </div>
+  </div>
+<script src="script.js"></script>
+</body>
+</html>

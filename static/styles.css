@@ -1,0 +1,197 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+  
+  .browser {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tabs {
+    background-color: #333;
+    display: flex;
+    padding: 10px;
+  }
+  
+  .tabs button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .tabs button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .tab-content {
+    flex: 1;
+    position: relative;
+  }
+  
+  .tab {
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+  
+  .tab.active {
+    display: block;
+  }
+  /* Add these styles for the search bar */
+.search-bar {
+  background-color: #444;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+}
+
+.search-bar span {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+}
+
+.search-bar span:hover {
+  background-color: rgba(127.5, 127.5, 127.5, 0.5);
+}
+/* Add these styles for the search bar */
+.search-bar {
+  background-color: #444;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+}
+
+.search-bar span {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+}
+
+.search-bar span:hover {
+  background-color: rgba(127.5, 127.5, 127.5, 0.5);
+}
+/* Updated styles for positioning tabs and search bar */
+.browser {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.tabs {
+  background-color: #333;
+  display: flex;
+  padding: 10px;
+}
+
+.tab-header {
+  display: flex;
+  align-items: center;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin-right: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.tab-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tab-button.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.search-bar {
+  background-color: #444;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar input[type="text"] {
+  flex-grow: 1;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+}
+
+.search-bar span {
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+  font-weight: bolder;
+  font-size: 15px;
+}
+
+.search-bar span:hover {
+  background-color: rgba(127.5, 127.5, 127.5, 0.5);
+}
+
+.buttons-left {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.buttons-left button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.buttons-left button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.favicon {
+  width: 16px;
+  height: 16px;
+  object-fit: cover;
+}
